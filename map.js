@@ -8,6 +8,8 @@ class GMap {
     let index
     if (typeof key === 'string') {
       index = 0
+    } else if (typeof key === 'number') {
+      index = key % this.bucket.length
     }
     return index
   }
