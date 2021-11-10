@@ -10,6 +10,8 @@ class GMap {
       index = 0
     } else if (typeof key === 'number') {
       index = key % this.bucket.length
+    } else if (typeof key === 'undefined') {
+      index = 1
     }
     return index
   }
