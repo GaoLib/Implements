@@ -12,6 +12,8 @@ class GMap {
       index = key % this.bucket.length
     } else if (typeof key === 'undefined') {
       index = 1
+    } else if (typeof key === 'boolean') {
+      index = 2
     }
     return index
   }
