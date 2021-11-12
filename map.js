@@ -14,6 +14,8 @@ class GMap {
       index = 1
     } else if (typeof key === 'boolean') {
       index = 2
+    } else if (typeof key === 'string') {
+      index = 3
     }
     return index
   }
