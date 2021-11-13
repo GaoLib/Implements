@@ -15,7 +15,9 @@ class GMap {
     } else if (typeof key === 'boolean') {
       index = 2
     } else if (typeof key === 'string') {
-      index = 3
+      for (let i=0;i<10;i++) {
+        index += isNaN(key.charCodeAt(i)) ? 0 : key.charCodeAt(i)
+      }
     }
     return index
   }
