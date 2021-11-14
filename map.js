@@ -2,6 +2,11 @@ class GMap {
   constructor () {
     this.size(0)
     this.bucket = new Array(8)
+
+    for (let i=0;i<8;i++) {
+      this.bucket[i] = {}
+      this.bucket[i].next = null
+    }
   }
 
   hash(key) {
@@ -19,6 +24,7 @@ class GMap {
         index += isNaN(key.charCodeAt(i)) ? 0 : key.charCodeAt(i)
       }
     }
+    index = index % this.bucket.length
     return index
   }
 }
