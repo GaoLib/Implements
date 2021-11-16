@@ -9,6 +9,16 @@ class GMap {
     }
   }
 
+  set(key, value) {
+    const i = this.hash(key)
+    let target = this.bucket[i]
+    while(target.next) {
+      target = target.next
+    }
+    target.next = {key, value, next: null}
+    return this
+  }
+
   hash(key) {
     let index
     if (typeof key === 'string') {
@@ -17,7 +27,7 @@ class GMap {
       index = key % this.bucket.length
     } else if (typeof key === 'undefined') {
       index = 1
-    } else if (typeof key === 'boolean') {
+    } else if (typeof key === 'object') {
       index = 2
     } else if (typeof key === 'string') {
       for (let i=0;i<10;i++) {
@@ -32,6 +42,12 @@ class GMap {
 const o = {}
 const map = new GMap([
   ['key1', 'value1'],
-  ['key2', 'value2']
+  ['key1', 'value1']
 ])
+
+map
+  .set('key2', 'value2')
+  .set(o, 'object1')
+  .set(o, 'object2')
+
 console.log(map)
