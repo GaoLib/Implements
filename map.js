@@ -13,7 +13,11 @@ class GMap {
     const i = this.hash(key)
     let target = this.bucket[i]
     while(target.next) {
+      if (target.next.key === key) {
+        target.next.value = value
+      }
       target = target.next
+      return
     }
     target.next = {key, value, next: null}
     return this
