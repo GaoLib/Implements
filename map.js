@@ -15,9 +15,9 @@ class GMap {
     while(target.next) {
       if (target.next.key === key) {
         target.next.value = value
+        return this
       }
       target = target.next
-      return
     }
     target.next = {key, value, next: null}
     return this
