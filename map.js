@@ -24,14 +24,14 @@ class GMap {
   }
 
   hash(key) {
-    let index
-    if (typeof key === 'string') {
+    let index = 0
+    if (typeof key === 'object') {
       index = 0
     } else if (typeof key === 'number') {
       index = key % this.bucket.length
     } else if (typeof key === 'undefined') {
       index = 1
-    } else if (typeof key === 'object') {
+    } else if (typeof key === 'boolean') {
       index = 2
     } else if (typeof key === 'string') {
       for (let i=0;i<10;i++) {
