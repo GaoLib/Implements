@@ -20,6 +20,7 @@ class GMap {
       target = target.next
     }
     target.next = {key, value, next: null}
+    this.size++
     return this
   }
 
