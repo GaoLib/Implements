@@ -24,6 +24,17 @@ class GMap {
     return this
   }
 
+  get(key) {
+    const i = this.hash(key)
+    let target = this.bucket[i]
+    while(target.next) {
+      if (target.next.key === key) {
+        return target.next.value
+      }
+      target = target.next
+    }
+  }
+
   hash(key) {
     let index = 0
     if (typeof key === 'object') {
@@ -56,3 +67,4 @@ map
   .set(o, 'object2')
 
 console.log(map)
+console.log(map.get(o))
