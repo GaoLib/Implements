@@ -12,7 +12,7 @@ class GMap {
   set(key, value) {
     const i = this.hash(key)
     let target = this.bucket[i]
-    while(target.next) {
+    while (target.next) {
       if (target.next.key === key) {
         target.next.value = value
         return this
@@ -27,7 +27,7 @@ class GMap {
   get(key) {
     const i = this.hash(key)
     let target = this.bucket[i]
-    while(target.next) {
+    while (target.next) {
       if (target.next.key === key) {
         return target.next.value
       }
@@ -38,8 +38,21 @@ class GMap {
   has(key) {
     const i = this.hash(key)
     let target = this.bucket[i]
-    while(target.next) {
+    while (target.next) {
       if (target.next.key === key) {
+        return true
+      }
+      target = target.next
+    }
+    return false
+  }
+
+  delete(key) {
+    const i = this.hash(key)
+    let target = this.bucket[i]
+    while (target.next) {
+      if (target.next.key === key) {
+        target.next = target.next.next
         return true
       }
       target = target.next
@@ -81,3 +94,5 @@ map
 console.log(map)
 console.log(map.get(o))
 console.log(map.has('a'))
+map.delete(o)
+console.log(map.has(o))
