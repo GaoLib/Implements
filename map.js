@@ -1,8 +1,12 @@
 class GMap {
   constructor () {
-    this.size = 0
     this.bucket = new Array(8)
 
+    this.init()
+  }
+
+  init() {
+    this.size = 0
     for (let i=0;i<8;i++) {
       this.bucket[i] = {}
       this.bucket[i].next = null
@@ -60,6 +64,10 @@ class GMap {
     return false
   }
 
+  clear() {
+    this.init()
+  }
+
   hash(key) {
     let index = 0
     if (typeof key === 'object') {
@@ -91,8 +99,9 @@ map
   .set(o, 'object1')
   .set(o, 'object2')
 
-console.log(map)
 console.log(map.get(o))
 console.log(map.has('a'))
 map.delete(o)
 console.log(map.has(o))
+map.clear()
+console.log(map.size, map)
