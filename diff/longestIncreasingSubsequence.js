@@ -1,4 +1,4 @@
-// array1：旧数组，array2：新数组
+// child1：旧数组，child2：新数组
 const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
   const isSameVnodeType = (n1, n2) => {
     return n1.key === n2.key && n1.type === n2.type
@@ -16,6 +16,11 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
   while (i < end1 && 1 < end2) {
     const node1 = child1[i]
     const node2 = child2[i]
-    if (isSameVnodeType(node1, node2)) i++
+    if (isSameVnodeType(node1, node2)) {
+      patch(node1.key)
+    } else {
+      break
+    }
+    i++
   }
 }
