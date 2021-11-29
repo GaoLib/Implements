@@ -10,10 +10,10 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
   const end1 = len1 - 1
   const end2 = len2 - 1
 
-  let i = 0
   // ! 双端校验
   // * 1.从首端（左边）开始按序查找，直到不匹配
-  while (i < end1 && 1 < end2) {
+  let i = 0
+  while (i <= end1 && i <= end2) {
     const node1 = child1[i]
     const node2 = child2[i]
     if (isSameVnodeType(node1, node2)) {
@@ -22,5 +22,17 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
       break
     }
     i++
+  }
+  // * 2.从末端（右边）开始按序查找，直到不匹配
+  while (i <= end1 && i <= end2) {
+    const node1 = child1[e1]
+    const node2 = child2[e2]
+    if (isSameVnodeType(node1, node2)) {
+      patch(node1.key)
+    } else {
+      break
+    }
+    e1--
+    e2--
   }
 }
