@@ -35,4 +35,14 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
     e1--
     e2--
   }
+  // * 3.旧节点没了，新节点还有
+  if (i > e1) {
+    if (i <= e2) {
+      while (i <= e2) {
+        const node2 = child2[i]
+        mountElement(node2.key)
+        i++
+      }
+    }
+  }
 }
