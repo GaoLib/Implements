@@ -47,7 +47,7 @@ describe('Array Diff', () => {
     const { diffArray } = require('./longestIncreasingSubsequence')
     diffArray(
       [{ key: 'a' }, { key: 'b' }],
-      [{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }],
+      [{ key: 'a' }, { key: 'b' }, { key: 'c' }],
       {
         mountElement,
         unmount,
@@ -55,8 +55,9 @@ describe('Array Diff', () => {
         move
       }
     )
-    expect(mountElement.mock.calls.length).toBe(2)
+    expect(patch.mock.calls.length).toBe(2)
+    expect(patch.mock.calls[0][0]).toBe('a')
+    expect(patch.mock.calls[1][0]).toBe('b')
     expect(mountElement.mock.calls[0][0]).toBe('c')
-    expect(mountElement.mock.calls[1][0]).toBe('d')
   })
 })
