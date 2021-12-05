@@ -39,10 +39,17 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
   if (i > e1) {
     if (i <= e2) {
       while (i <= e2) {
-        const node2 = child2[i]
-        mountElement(node2.key)
+        const node = child2[i]
+        mountElement(node.key)
         i++
       }
+    }
+  // * 3.新节点没了，旧节点还有
+  } else if (i > e2) {
+    while (i <= e1) {
+      const node = child1[i]
+      unmount(node.key)
+      i++
     }
   }
 }
