@@ -44,12 +44,22 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
         i++
       }
     }
-  // * 3.新节点没了，旧节点还有
+  // * 4.新节点没了，旧节点还有
   } else if (i > e2) {
     while (i <= e1) {
       const node = child1[i]
       unmount(node.key)
       i++
+    }
+  // * 5.新旧节点都还有，且乱序
+  } else {
+    const start1 = i
+    const start2 = i
+    // ! 新的VDOM做成Map,方便查找，修改
+    const keyToNewIndexMap = new Map()
+    for (i = start2; i <= e2; i++) {
+      const node = child2[i]
+      keyToNewIndexMap.set(node.key, i)
     }
   }
 }
