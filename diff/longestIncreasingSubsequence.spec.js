@@ -81,4 +81,30 @@ describe('Array Diff', () => {
     expect(patch.mock.calls[1][0]).toBe('b')
     expect(unmount.mock.calls[0][0]).toBe('c')
   })
+  it('5. 新旧节点都有，且乱序', () => {
+    const mountElement = jest.fn()
+    const unmount = jest.fn()
+    const patch = jest.fn()
+    const move = jest.fn()
+    const { diffArray } = require('./longestIncreasingSubsequence')
+    diffArray(
+      [{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'e' }, { key: 'f' }, { key: 'g' }],
+      [{ key: 'a' }, { key: 'b' }, { key: 'e' }, { key: 'd' }, { key: 'c' }, { key: 'h' }, { key: 'f' }, { key: 'g' }],
+      {
+        mountElement,
+        unmount,
+        patch,
+        move
+      }
+    )
+    expect(patch.mock.calls.length).toBe(7)
+    expect(patch.mock.calls[0][0]).toBe('a')
+    expect(patch.mock.calls[1][0]).toBe('b')
+    expect(patch.mock.calls[2][0]).toBe('g')
+    expect(patch.mock.calls[3][0]).toBe('f')
+    expect(patch.mock.calls[4][0]).toBe('c')
+    expect(patch.mock.calls[5][0]).toBe('d')
+    expect(patch.mock.calls[6][0]).toBe('e')
+    expect(unmount.mock.calls.length).toBe(0)
+  })
 })
