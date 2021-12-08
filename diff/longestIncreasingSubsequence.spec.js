@@ -106,5 +106,8 @@ describe('Array Diff', () => {
     expect(patch.mock.calls[5][0]).toBe('d')
     expect(patch.mock.calls[6][0]).toBe('e')
     expect(unmount.mock.calls.length).toBe(0)
+    expect(mountElement.mock.calls[0][0]).toBe('h')
+    expect(move.mock.calls[0][0]).toBe('d')
+    expect(move.mock.calls[1][0]).toBe('e')
   })
 })
