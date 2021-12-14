@@ -55,21 +55,27 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
   } else {
     const start1 = i
     const start2 = i
-    // ! 1. 新的VDOM做成Map,方便查找，修改
+    // ! 5-1. 新的VDOM做成Map,方便查找，修改
     const keyToNewIndexMap = new Map()
     for (i = start2; i <= end2; i++) {
       const node = child2[i]
       keyToNewIndexMap.set(node.key, i)
     }
-    // ! 2. 遍历旧的VDOM，在Map中找到则patch，否则unmount
+    // ! 5-2. 遍历旧的VDOM，在Map中找到则patch，否则unmount
+    
+    const toBePatched = end2 - start2 + 1
+    const newIndexToOldIndexMap = new Array(toBePatched).fill(0)  // * 下标为新元素的相对索引，值为旧元素索引
+
     for (i = start1; i <= end1; i++) {
       const prevChild = child1[i]
       let newIndex = keyToNewIndexMap.get(prevChild.key)
       if (newIndex === undefined) {
         unmount(prevChild.key)
       } else {
+        newIndexToOldIndexMap[newIndex - start2] = i + 1
         patch(prevChild.key)
       }
     }
+    // ! 5-3. 遍历新的VDOM，如果在旧的中没有找到mount，找到位置变化则move
   }
 }
