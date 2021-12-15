@@ -77,5 +77,14 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
       }
     }
     // ! 5-3. 遍历新的VDOM，如果在旧的中没有找到mount，找到位置变化则move
+    for (let i = toBePatched - 1;i >= 0; i--) {
+      const nextIndex = start2 + i
+      const nextChild = child2[nextIndex]
+      if (newIndexToOldIndexMap[i] === 0) {
+        mountElement(nextChild.key)
+      } else {
+        move(nextChild.key)
+      }
+    }
   }
 }
