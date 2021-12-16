@@ -110,7 +110,7 @@ describe('Array Diff', () => {
     expect(move.mock.calls[0][0]).toBe('d')
     expect(move.mock.calls[1][0]).toBe('e')
   })
-  it('6. 新旧节点都有，且乱序', () => {
+  it('6. 新旧节点都有，且乱序，最长递增', () => {
     const mountElement = jest.fn()
     const unmount = jest.fn()
     const patch = jest.fn()
@@ -118,7 +118,11 @@ describe('Array Diff', () => {
     const { diffArray } = require('./longestIncreasingSubsequence')
     diffArray(
       [{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'e' }, { key: 'f' }, { key: 'g' }],
-      [{ key: 'a' }, { key: 'b' }, { key: 'e' }, { key: 'd' }, { key: 'c' }, { key: 'h' }, { key: 'f' }, { key: 'g' }],
+      [{ key: 'a' }, { key: 'b' }, { key: 'e' }, { key: 'c' }, { key: 'd' }, { key: 'h' }, { key: 'f' }, { key: 'g' }],
+      //   0  1  2  3  4  5  6  7
+      //   a  b [c  d  e] f  g
+      //   a  b [e  c  d  h] f  g
+      //        [5, 3, 4, 0]  ->  newIndexToOldIndexMap     
       {
         mountElement,
         unmount,
