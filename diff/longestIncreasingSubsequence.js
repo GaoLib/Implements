@@ -66,6 +66,10 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
     const toBePatched = end2 - start2 + 1
     const newIndexToOldIndexMap = new Array(toBePatched).fill(0)  // * 下标为新元素的相对索引，值为旧元素索引
 
+    // ! 用来标记是否需要移动
+    let moved = false
+    let maxNewIndexSoFar = 0
+
     for (i = start1; i <= end1; i++) {
       const prevChild = child1[i]
       let newIndex = keyToNewIndexMap.get(prevChild.key)
@@ -74,8 +78,19 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
       } else {
         newIndexToOldIndexMap[newIndex - start2] = i + 1
         patch(prevChild.key)
+
+        if (newIndex >= maxNewIndexSoFar) {
+          maxNewIndexSoFar = newIndex
+        } else {
+          moved = true
+        }
       }
     }
+
+    // * 最长递增子序列，移动最少更新
+    const increasingNewIndexSequence = moved ? getSequence(newIndexToOldIndexMap) : []
+
+
     // ! 5-3. 遍历新的VDOM，如果在旧的中没有找到mount，找到位置变化则move
     for (let i = toBePatched - 1;i >= 0; i--) {
       const nextIndex = start2 + i
