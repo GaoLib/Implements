@@ -4,6 +4,10 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
     return n1.key === n2.key && n1.type === n2.type
   }
 
+  const getSequence = () => {
+    return []
+  }
+
   const len1 = child1.length
   const len2 = child2.length
 
@@ -90,6 +94,8 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
     // * 最长递增子序列，移动最少更新
     const increasingNewIndexSequence = moved ? getSequence(newIndexToOldIndexMap) : []
 
+    let lastIndex = increasingNewIndexSequence.length - 1
+
 
     // ! 5-3. 遍历新的VDOM，如果在旧的中没有找到mount，找到位置变化则move
     for (let i = toBePatched - 1;i >= 0; i--) {
@@ -97,8 +103,13 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
       const nextChild = child2[nextIndex]
       if (newIndexToOldIndexMap[i] === 0) {
         mountElement(nextChild.key)
-      } else {
-        move(nextChild.key)
+      } else if (moved) {
+        // ! 如果当前节点在最长递增子序列中则不需要移动，否则移动
+        if (lastIndex < 0 || i !== increasingNewIndexSequence[lastIndex]) {
+          move(nextChild.key)
+        } else {
+          lastIndex--
+        }
       }
     }
   }
