@@ -4,7 +4,11 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
     return n1.key === n2.key && n1.type === n2.type
   }
 
-  const getSequence = () => {
+  const getSequence = (arr) => {
+    const recordIndexOfI = arr.slice()
+    const result = [0]
+    const len = arr.length
+
     return []
   }
 
