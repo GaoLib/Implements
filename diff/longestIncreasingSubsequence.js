@@ -9,6 +9,40 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
     const result = [0]
     const len = arr.length
 
+    let resultLastIndex
+    let resultLast
+
+    for (let i = 0; i < len; i++) {
+      const arrI = arr[i];
+      if (arrI !== 0) {
+        // result最后一个元素
+        resultLastIndex = result.length - 1;
+        resultLast = result[resultLastIndex];
+        if (arr[resultLast] < arrI) {
+          recordIndexOfI[i] = resultLast;
+          result.push(i);
+          continue;
+        }
+        let left = 0,
+          right = resultLastIndex;
+        while (left < right) {
+          const mid = (left + right) >> 1;
+          if (arr[result[mid]] < arrI) {
+            left = mid + 1;
+          } else {
+            right = mid;
+          }
+        }
+
+        if (arrI < arr[result[left]]) {
+          if (left > 0) {
+            recordIndexOfI[i] = result[left - 1];
+          }
+          result[left] = i;
+        }
+      }
+    }
+
     return []
   }
 
