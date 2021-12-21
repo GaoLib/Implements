@@ -43,6 +43,10 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
       }
     }
 
+    //  recordIndexOfI记录了正确的索引 result 进而找到最终正确的索引
+    resultLastIndex = result.length - 1;
+    resultLast = result[resultLastIndex];
+
     return []
   }
 
