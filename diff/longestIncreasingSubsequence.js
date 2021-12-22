@@ -47,7 +47,13 @@ const diffArray = (child1, child2, { mountElement, unmount, patch, move }) => {
     resultLastIndex = result.length - 1;
     resultLast = result[resultLastIndex];
 
-    return []
+    while (resultLastIndex >= 0) {
+      result[resultLastIndex] = resultLast;
+      resultLast = recordIndexOfI[resultLast];
+      resultLastIndex--;
+    }
+
+    return result
   }
 
   const len1 = child1.length
